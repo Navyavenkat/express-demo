@@ -1,36 +1,35 @@
 const express=require('express')
 const router=express.Router()
 router.get('/',(req,res)=>{
-  res.send("Service Page")
+  res.send("User Page")
 })
 
-router.get('/:id',(req,res)=>{
-const pageId=Number(req.params.id);
-  const serviceId=service.find((ser)=>ser.id===pageId);
-  if(!serviceId){
-    res.send("Service Not Found")
-  }
-  else{
-    res.json(service[pageId])
-  }
+router.get('/:id([0-9])',(req,res)=>{
+res.send(req.user.name)
+ 
 })
-const service=[
-  {
-    id:0,
-    name:'App development'
-  },
-  {
-    id:1,
-    name:'Web development'
-  },
-  {
-    id:2,
-    name:'Iot development'
-  },
-  {
-    id:3,
-    name:'Embedded system'
 
-  }
-]
+
+const users=[{
+  idno:1,
+  name:'web'
+},
+{
+  idno:2,
+  name:'DataScience'
+},
+{
+  idno:3,
+  name:'ML engineer'
+},
+{
+  idno:4,
+  name:'Ai engineer'
+}]
+
+router.param('id',(req,res,next,id)=>{
+  req.user=users[id]
+  next();
+})
+// const UsersArrayLength=users.length;
 module.exports=router;
