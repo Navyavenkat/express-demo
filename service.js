@@ -1,35 +1,57 @@
 const express=require('express')
 const router=express.Router()
 router.get('/',(req,res)=>{
-  res.send("User Page")
-})
-
-router.get('/:id([0-9])',(req,res)=>{
-res.send(req.user.name)
- 
+  res.send("Service Page")
 })
 
 
-const users=[{
-  idno:1,
-  name:'web'
-},
-{
-  idno:2,
-  name:'DataScience'
-},
-{
-  idno:3,
-  name:'ML engineer'
-},
-{
-  idno:4,
-  name:'Ai engineer'
-}]
+router.get('/new',(req,res)=>{
+  res.render('service/new')
+})
 
+router.post('/',(req,res)=>{
+  service.push({duration:req.body.duration,name:req.body.name,cost:req.body.cost})
+  res.redirect(`/service/${service.length-1}`)
+})
+
+router.get('/:id',(req,res)=>{
+
+  if(req.params.id<service.length){
+    console.log(req.service.duration);
+    res.send(`  Service Name:${req.service.name} ,Service Duration:${req.service.duration}, Service Cost:${req.service.cost}`)
+    //res.json(service)
+  }
+  else{
+    res.send("Service Not Found")
+  }
+})
+
+
+
+const service=[
+  {
+    duration:10,
+    name:'App development'
+    ,cost:1000
+  },
+  {
+    duration:12,
+    name:'Web development'
+    ,cost:1001
+  },
+  {
+    duration:21,
+    name:'Iot development'
+    ,cost:1003
+  },
+  {
+    duration:13,
+    name:'Embedded system'
+    ,cost:1004
+  }
+]
 router.param('id',(req,res,next,id)=>{
-  req.user=users[id]
+  req.service=service[id];
   next();
 })
-// const UsersArrayLength=users.length;
 module.exports=router;

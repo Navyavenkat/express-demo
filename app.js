@@ -5,9 +5,16 @@ const homePage=require('./home.js')
 const aboutRouter=require('./about.js')
 const serviceRouter=require('./service.js')
 const contactRouter=require('./contact.js')
+
+app.use(express.static('public'))
+
+app.set('view engine','ejs')
 app.get('/',(request,response)=>{
-    response.send("hi")
+    //response.send("hi")
     //reponse.sendStatus(404)
+    //response.render('index')
+    response.render('index')
+
    
 })
 
